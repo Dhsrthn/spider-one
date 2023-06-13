@@ -4,19 +4,21 @@ body {
     align-items: center;
     justify-content: center;
     background-image: url('files/background.png');
-    background-size: 25%
+    background-size: 25%;
+    overflow: hidden;
 }
 
 .gamedeets{
     width:50vmin;
     height:30vmin;
-    font-size: 10vmin;
+    font-size: 8vmin;
     text-decoration-color: brown;
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
     font-family: 'puzzle';
+    background-image: url('files/puzzleback.jpg');
 }
 
 #puzzle{
@@ -26,7 +28,8 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     justify-content: center;
-    background-image: url('files/puzzleback.jpg');
+
+    border:0.01vmin solid black;
     background-size: 100%;
     font-size: 100px;
 }
@@ -35,7 +38,7 @@ body {
     position: relative;
     overflow: hidden;
     
-  }
+}
 
 .puzzle-image {
     max-width: 100%;
@@ -43,11 +46,9 @@ body {
     display: block;
 }
 
-#pleaserandom{
-    height: 5vmin;
-    width: 50vmin;
-    margin-top: 10vmin;
-    font-size: 3vmin;
+
+.puzzle-number {
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,4 +58,154 @@ body {
 @font-face {
     font-family: 'puzzle' ;
     src: url(files/puzzle.ttf);
+}
+
+.buttons {
+    display: flex;
+    height:20vmin;
+    background-size: 100%;
+    background-image: url('files/puzzleback.jpg');
+}
+
+button {
+    cursor: pointer;
+    background-color: transparent;
+    width: 12.5vmin;
+    height: 7vmin;
+    margin-top: 5vmin;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+.puzzlenumberbackground {
+    background-image: url('files/background.png');
+  }
+
+
+#uploadLabel {
+    cursor: pointer;
+    display: inline-block;
+    width: 12.5vmin;
+    height: 7vmin;
+    margin-top: 5vmin;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('files/photo.png');
+}
+
+#linklabel {
+    cursor: pointer;
+    display: inline-block;
+    width: 12.5vmin;
+    height: 7vmin;
+    margin-top: 5vmin;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('files/link.png');
+}
+  
+#imageInput {
+    display: none;
+}
+
+#linkInput{
+    cursor: pointer;
+    display: inline-block;
+    width: 12.5vmin;
+    height: 7vmin;
+    margin-top: 5vmin;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('files/link.png');
+    font-size: 16px;
+    transition: width 0.3s, height 0.3s;
+}
+
+
+#linkInput:focus {
+    width: 25vmin; 
+    height: 7vmin; 
+    font-size: 20px;
+    font-size: 3vmin;
+    background-image: none;
+}
+
+@media (orientation:portrait){
+    .gamedeets{
+        width:50vmax;
+        height:30vmax;
+        font-size: 8vmax;
+    }
+    #puzzle{
+        width: 50vmax;
+        height: 50vmax;
+        display: grid;
+        border:0.01vmax solid black;
+    }
+    .buttons {
+        display: flex;
+        height:20vmax;
+        background-size: 100%;
+        background-image: url('files/puzzleback.jpg');
+    }
+    button {
+        width: 12.5vmax;
+        height: 7vmax;
+        margin-top: 5vmax;
+    }
+    #uploadLabel {
+        cursor: pointer;
+        display: inline-block;
+        width: 12.5vmax;
+        height: 7vmax;
+        margin-top: 5vmax;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('files/photo.png');
+    }
+    
+    #linklabel {
+        cursor: pointer;
+        display: inline-block;
+        width: 12.5vmax;
+        height: 7vmax;
+        margin-top: 5vmax;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('files/link.png');
+    }
+      
+    #imageInput {
+        display: none;
+    }
+    
+    #linkInput{
+        cursor: pointer;
+        display: inline-block;
+        width: 12.5vmax;
+        height: 7vmax;
+        margin-top: 5vmax;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('files/link.png');
+        font-size: 16px;
+        transition: width 0.3s, height 0.3s;
+    }
+    
+    
+    #linkInput:focus {
+        width: 25vmax; 
+        height: 7vmax; 
+        font-size: 20px;
+        font-size: 3vmax;
+        background-image: none;
+    }
 }
