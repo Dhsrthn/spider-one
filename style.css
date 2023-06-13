@@ -1,0 +1,60 @@
+body {
+    block-size: fit-content;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('files/background.png');
+    background-size: 25%
+}
+
+.gamedeets{
+    width:50vmin;
+    height:30vmin;
+    font-size: 10vmin;
+    text-decoration-color: brown;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: 'puzzle';
+}
+
+#puzzle{
+    width: 50vmin;
+    height: 50vmin;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
+    background-image: url('files/puzzleback.jpg');
+    background-size: 100%;
+    font-size: 100px;
+}
+
+.puzzle-cell {
+    position: relative;
+    overflow: hidden;
+    
+  }
+
+.puzzle-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+#pleaserandom{
+    height: 5vmin;
+    width: 50vmin;
+    margin-top: 10vmin;
+    font-size: 3vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@font-face {
+    font-family: 'puzzle' ;
+    src: url(files/puzzle.ttf);
+}
