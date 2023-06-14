@@ -6,39 +6,25 @@ let toindex
 let temp
 
 const randombutton=document.getElementById('pleaserandom')
-
+const solvebutton=document.getElementById('pleasesolve')
 let cellHeight,cellWidth
-
-function gameloop(){
-    puzzleboard.innerHTML = '';
-    for(let i=0;i<9;i++){
-        const wordelement = document.createElement('div')
-        wordelement.style.gridColumnStart=array[i][1]
-        wordelement.style.gridRowStart=array[i][0]
-        array[i][2][0].classList.add('puzzle-image')
-        wordelement.appendChild(array[i][2][0])
-        wordelement.classList.add('puzzle-cell')
-        puzzleboard.appendChild(wordelement)
-        
-    }
-}
-
 let startingnow=true
 let numberpuzzle=true
-let gridrows=3
-let gridcolumns=3
+let imagepuzzletrue=false
+let gridlength=3
 let arrayofnumbers=[]
 let arrayforpuzzle=[]
 let starting
 let totalboxes
 let fontsize
 let swaprow,swapcol
-
 const noinpuzzles=document.getElementsByClassName('puzzle-number')
+
 function main(){
+   
     const puzzleRect = puzzleboard.getBoundingClientRect();
-    cellWidth = puzzleRect.width / gridcolumns;
-    cellHeight = puzzleRect.height / gridrows;
+    cellWidth = puzzleRect.width / gridlength;
+    cellHeight = puzzleRect.height / gridlength;
     if(numberpuzzle==true){
         if(startingnow){
             numberpuzzleshow()
@@ -46,7 +32,13 @@ function main(){
         displaypuzzlenumber()
         
     }
-    //gameloop()
+    if(imagepuzzletrue){
+        
+        if(startingnow){
+            imagepuzzle()
+        }
+        displayimagepuzzle()
+    }
     requestAnimationFrame(main)
 }
 
@@ -54,11 +46,9 @@ window.requestAnimationFrame(main)
 
 function numberpuzzleshow(){
     starting=0
-    totalboxes=gridcolumns*gridrows
-    //number of colmuns is x
-    //number of rows is y
-    puzzleboard.style.gridTemplateColumns = `repeat(${gridcolumns}, 1fr)`;
-    puzzleboard.style.gridTemplateRows = `repeat(${gridrows}, 1fr)`;
+    totalboxes=gridlength**2
+    puzzleboard.style.gridTemplateColumns = `repeat(${gridlength}, 1fr)`;
+    puzzleboard.style.gridTemplateRows = `repeat(${gridlength}, 1fr)`;
     for(let i=0;i<totalboxes;i++){
         if(i==(totalboxes)-1){
             arrayofnumbers[i]=' '
@@ -67,8 +57,8 @@ function numberpuzzleshow(){
             arrayofnumbers[i]=i+1
         }
     }
-    for(let i=1;i<gridrows+1;i++){
-        for(let j=1;j<gridcolumns+1;j++){
+    for(let i=1;i<gridlength+1;i++){
+        for(let j=1;j<gridlength+1;j++){
             arrayforpuzzle[starting]=[i,j,arrayofnumbers[starting]]
             starting++
         }
@@ -115,11 +105,31 @@ function clicked(event) {
   if(event.target==randombutton ){
         actualrandomizer()
   } 
+  if(event.target==solvebutton){
+    if(numberpuzzle){
+        solvenumberpuzzle()
+    }
+  }
 }
 
 function swap(){
     if(!numberpuzzle){
-        
+        for(let i=0;i<totalboxes;i++){
+            if(arrayforimage[i][2][1]==0){
+                swaprow=arrayforimage[i][0]
+                swapcol=arrayforimage[i][1]
+                toindex=i
+
+            }
+        }
+        if(((row==swaprow+1 || row==swaprow-1) && col==swapcol) || (row==swaprow && (col==swapcol+1 || col==swapcol-1) )){
+            arrayforimage.forEach((combo)=>{
+                if(combo[0]==row && combo[1]==col){
+                    fromindex=arrayforimage.indexOf(combo)
+                }
+            })
+            actuallyswap(fromindex,toindex)
+        }
     }
     if(numberpuzzle){
         for(let i=0;i<totalboxes;i++){
@@ -141,6 +151,7 @@ function swap(){
     }
     
 }
+let temparray=[]
 
 function actuallyswap(index1,index2){
     if(numberpuzzle){
@@ -150,7 +161,9 @@ function actuallyswap(index1,index2){
 
     }
     if(!numberpuzzle){
-        
+        temparray=arrayforimage[index1][2]
+        arrayforimage[index1][2]=arrayforimage[index2][2]
+        arrayforimage[index2][2]=temparray
     }   
     
 }
@@ -160,10 +173,48 @@ let len
 let tempindex
 let checkingarray=[]
 let numberofinverse
+let posforeven
+let tempimagearray=[]
+
 
 function actualrandomizer(){
+
     if(!numberpuzzle){
-        
+        checkingarray=[]
+        for(let i=0;i<totalboxes;i++){
+            tempimagearray[i]=arrayforimage[i][2]
+        }
+        for(let i=0;i<totalboxes;i++){
+            len=tempimagearray.length
+            tempindex=Math.floor(Math.random()*len)
+            arrayforimage[i][2]=tempimagearray[tempindex]
+            tempimagearray.splice(tempindex,1)
+        }
+        for(let i=0;i<totalboxes;i++){
+            checkingarray[i]=arrayforimage[i][2][1]
+        }
+        numberofinverse=numberofinversions(checkingarray)
+        if(gridlength%2!==0){
+            if(numberofinverse%2!==0){
+                actualrandomizer()
+            }
+            else{
+                return
+            }
+        }
+        if(gridlength%2==0){
+            for(let i=0;i<totalboxes;i++){
+                if(arrayforimage[i][2][1]==0){
+                    posforeven=gridlength-arrayforimage[i][0]+1
+                }
+            }
+            if((numberofinverse+posforeven)%2==0){
+                actualrandomizer()
+            }
+            else{
+                return
+            }
+        }
     }
     if(numberpuzzle){
         checkingarray=[]
@@ -181,16 +232,27 @@ function actualrandomizer(){
             checkingarray[i]=arrayforpuzzle[i][2]
         }
         numberofinverse=numberofinversions(checkingarray)
-        if(numberofinverse%2!==0){
-            actualrandomizer()
+        if(gridlength%2!==0){
+            if(numberofinverse%2!==0){
+                actualrandomizer()
+            }
+            else{
+                return
+            }
         }
-        else{
-            console.log(arrayforpuzzle)
-            console.log(checkingarray)
-            console.log(numberofinverse)
-            return
+        if(gridlength%2==0){
+            for(let i=0;i<totalboxes;i++){
+                if(arrayforpuzzle[i][2]==' '){
+                    posforeven=gridlength-arrayforpuzzle[i][0]+1  
+                }
+            }
+            if((numberofinverse+posforeven)%2==0){
+                actualrandomizer()
+            }
+            else{
+                return
+            }
         }
-        
     }
    
 }
@@ -217,3 +279,192 @@ function numberofinversions(anyarray){
         }
     return ninverse
 }
+
+let initialindex
+let inir
+let inic
+let possibilities=[]
+let actualpossible=[]
+let checkings=[]
+let temporary
+let numbersinverse=[]
+let reference=[]
+let movement=[]
+let firstsolve=1
+
+function solvenumberpuzzle(){
+    actualpossible=[]
+        for(let i=0;i<totalboxes;i++){
+            if(arrayforpuzzle[i][2]==' '){
+                initialindex=i
+                inir=arrayforpuzzle[i][1]
+                inic=arrayforpuzzle[i][0]
+            }
+        }
+        possibilities[0]=[inic+1,inir]
+        possibilities[1]=[inic-1,inir]
+        possibilities[2]=[inic,inir+1]
+        possibilities[3]=[inic,inir-1]
+
+        for(let i=0;i<totalboxes;i++){
+            for(let j=0;j<4;j++){
+               if(arrayforpuzzle[i][0]==possibilities[j][0] && arrayforpuzzle[i][1]==possibilities[j][1]){
+                    actualpossible.push(i)
+               }
+            }
+        }
+        for(i=0;i<actualpossible.length;i++){
+            checkings.push([])
+            reference.push([])
+        }
+
+        for(let i=0;i<actualpossible.length;i++){
+            for(let j=0;j<totalboxes;j++){
+                checkings[i].push([arrayforpuzzle[j][2]])
+            }
+        }
+        for(let i=0;i<actualpossible.length;i++){
+            temporary=checkings[i][initialindex]
+            checkings[i][initialindex]=checkings[i][actualpossible[i]]
+            checkings[i][actualpossible[i]]=temporary
+        }
+        for(let i=0;i<checkings.length;i++){
+            numbersinverse[i]=numberofinversions(checkings[i])
+            reference[i]=[i,numbersinverse[i],actualpossible[i]]
+            
+        }
+        reference.sort((a,b)=> b[0]-a[0])
+
+        if(firstsolve==1){
+            actuallyswap(initialindex,actualpossible[0])
+            movement.push([initialindex,actualpossible[0]])
+            firstsolve=0
+        }
+        
+        if(movement.includes([initialindex,actualpossible[0]])){
+            actuallyswap(initialindex,actuallyswap[1])
+            movement.push([initialindex,actualpossible[1]])
+        }
+        else{
+            actuallyswap(initialindex,actualpossible[0])
+            movement.push([initialindex,actualpossible[0]])
+        }
+        
+}
+
+
+
+
+
+let imagearray=[]
+let originaldimension
+let remainder
+let floorvalue
+let arrayforimage=[]
+let imagesrc
+
+
+
+function imagepuzzle(){
+
+
+    starting=0
+    const puzzleRect = puzzleboard.getBoundingClientRect();
+    totalboxes=gridlength**2
+    puzzleboard.style.gridTemplateColumns = `repeat(${gridlength}, 1fr)`;
+    puzzleboard.style.gridTemplateRows = `repeat(${gridlength}, 1fr)`;
+   
+    puzzleboard.style.background='none';
+    for(let i=0;i<totalboxes;i++){
+        imagearray.push([])
+    }
+
+    for(let i=0;i<totalboxes;i++){
+    
+        if(i!=totalboxes-1){
+            imagearray[i]=document.createElement('div')
+            imagearray[i].style.backgroundImage=`url(${imagesrc})`
+            imagearray[i].style.backgroundSize= `${puzzleRect.width}px ${puzzleRect.height}px`
+            
+            remainder=(i%gridlength)
+            floorvalue=Math.floor(i/gridlength)
+            
+            
+            imagearray[i].style.backgroundPosition=100/(gridlength-1)*(remainder)+'% '+100/(gridlength-1)*(floorvalue)+'%' 
+            
+            imagearray[i].style.backgroundRepeat = "no-repeat";
+        
+        }
+        else{
+            imagearray[i]=document.createElement('div')
+            imagearray[i].style.backgroundImage="url('files/empty.png')"
+        }
+    }
+    
+    for(let i=1;i<gridlength+1;i++){
+        for(let j=1;j<gridlength+1;j++){
+            if(!(i==gridlength && j==gridlength)){
+                arrayforimage[starting]=[i,j,[imagearray[starting],starting+1]]
+            }
+            else{
+                arrayforimage[starting]=[i,j,[imagearray[starting],0]]
+            }
+            starting=starting+1
+        }
+
+    }
+
+    displayimagepuzzle()
+    startingnow=false
+    
+}
+
+function displayimagepuzzle(){
+    puzzleboard.innerHTML='';
+    for(let i=0;i<totalboxes;i++){
+        arrayforimage[i][2][0].style.gridColumnStart=arrayforimage[i][1]
+        arrayforimage[i][2][0].style.gridRowStart=arrayforimage[i][0]
+        puzzleboard.appendChild(arrayforimage[i][2][0])
+    }
+}
+
+
+
+
+
+const imageupload=document.getElementById('imageInput')
+const Urlinput = document.getElementById('linkInput')
+
+    imageupload.addEventListener('change',function(){
+        
+
+        const file=this.files[0]
+        const reader=new FileReader()
+        
+        reader.onload=function(e){
+        
+                imagesrc=e.target.result
+            
+            
+          
+        }
+        reader.readAsDataURL(file)
+        
+            startingnow=true
+        numberpuzzle=false
+        imagepuzzletrue=true
+        
+        
+    })
+
+    Urlinput.addEventListener('change',function(){
+  
+        imagesrc=this.value
+        startingnow=true
+        numberpuzzle=false
+        imagepuzzletrue=true
+ 
+    })
+
+   
+    

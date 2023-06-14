@@ -10,7 +10,7 @@ body {
 
 .gamedeets{
     width:50vmin;
-    height:30vmin;
+    height:25vmin;
     font-size: 8vmin;
     text-decoration-color: brown;
     display: flex;
@@ -28,7 +28,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     justify-content: center;
-
+    user-select: none;
     border:0.01vmin solid black;
     background-size: 100%;
     font-size: 100px;
@@ -62,15 +62,32 @@ body {
 
 .buttons {
     display: flex;
-    height:20vmin;
+    height:15vmin;
+    width:50vmin;
     background-size: 100%;
     background-image: url('files/puzzleback.jpg');
+}
+
+.selectgrid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:7vmin;
+    width:50vmin;
+    background-image: url('files/puzzleback.jpg');
+}
+#gridinput{
+
+    font-size: 2vmin;
+    width: 30vmin;
+    
+    height:3vmin
 }
 
 button {
     cursor: pointer;
     background-color: transparent;
-    width: 12.5vmin;
+    width: 14vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -135,6 +152,21 @@ button {
     background-image: none;
 }
 
+
+#enter{
+    cursor: pointer;
+    background-color: transparent;
+    width: 5vmin;
+    height: 5vmin;
+    position: relative;
+    top: -2vmin;
+    left: 2vmin;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-image: url('files/enter.png');
+}
 @media (orientation:portrait){
     .gamedeets{
         width:50vmax;
@@ -142,8 +174,8 @@ button {
         font-size: 8vmax;
     }
     #puzzle{
-        width: 50vmax;
-        height: 50vmax;
+        width: 70vmin;
+        height: 70vmin;
         display: grid;
         border:0.01vmax solid black;
     }
@@ -209,3 +241,5 @@ button {
         background-image: none;
     }
 }
+
+
