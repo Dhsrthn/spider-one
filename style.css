@@ -164,6 +164,7 @@ button {
         overflow:auto;
     }
     #puzzle{
+        margin:0 auto;
         width:40vmax;
         height: 40vmax;
         border:0.01vmax solid black;

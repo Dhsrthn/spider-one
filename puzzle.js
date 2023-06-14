@@ -1,6 +1,5 @@
 const puzzleboard=document.getElementById('puzzle')
 swapped=false
-let swapx,swapy
 let fromindex
 let toindex
 let temp
@@ -21,17 +20,17 @@ let swaprow,swapcol
 const noinpuzzles=document.getElementsByClassName('puzzle-number')
 
 function main(){
-   
     const puzzleRect = puzzleboard.getBoundingClientRect();
     cellWidth = puzzleRect.width / gridlength;
     cellHeight = puzzleRect.height / gridlength;
+
     if(numberpuzzle==true){
         if(startingnow){
             numberpuzzleshow()
         }
-        displaypuzzlenumber()
-        
+        displaypuzzlenumber()    
     }
+
     if(imagepuzzletrue){
         
         if(startingnow){
@@ -39,6 +38,7 @@ function main(){
         }
         displayimagepuzzle()
     }
+
     requestAnimationFrame(main)
 }
 
@@ -82,16 +82,14 @@ function displaypuzzlenumber(){
     fontsize=Math.min(cellHeight/3,cellWidth/3)
     for (let i = 0; i < noinpuzzles.length; i++) {
         noinpuzzles[i].style.fontSize = fontsize+'px';
-    }
-    
-    
+    } 
 }
 
 window.addEventListener('mousedown',clicked)
 
 function clicked(event) {
     const puzzleRect = puzzleboard.getBoundingClientRect();
-    if(event.clientX>puzzleRect.left && event.clientX<puzzleRect.left+puzzleRect.width && event.clientY>puzzleRect.top && event.clientY<puzzleRect.top+puzzleRect.height ){
+    if(event.clientX>puzzleRect.left && event.clientX<puzzleRect.left+puzzleRect.width && event.clientY>puzzleRect.top && event.clientY<puzzleRect.top+puzzleRect.height){
         swapped=false
         const offsetX = event.clientX - puzzleRect.left;
         const offsetY = event.clientY - puzzleRect.top;
@@ -147,10 +145,9 @@ function swap(){
             })
             actuallyswap(fromindex,toindex)
         }
-
     }
-    
 }
+
 let temparray=[]
 
 function actuallyswap(index1,index2){
@@ -158,14 +155,12 @@ function actuallyswap(index1,index2){
         temp=arrayforpuzzle[index1][2]
         arrayforpuzzle[index1][2]=arrayforpuzzle[index2][2]
         arrayforpuzzle[index2][2]=temp
-
     }
     if(!numberpuzzle){
         temparray=arrayforimage[index1][2]
         arrayforimage[index1][2]=arrayforimage[index2][2]
         arrayforimage[index2][2]=temparray
     }   
-    
 }
 
 let tempnumberarray=[]
@@ -256,6 +251,7 @@ function actualrandomizer(){
     }
    
 }
+
 let ninverse
 let splicingindex
 
@@ -352,10 +348,6 @@ function solvenumberpuzzle(){
         
 }
 
-
-
-
-
 let imagearray=[]
 let originaldimension
 let remainder
@@ -363,10 +355,7 @@ let floorvalue
 let arrayforimage=[]
 let imagesrc
 
-
-
 function imagepuzzle(){
-
 
     starting=0
     const puzzleRect = puzzleboard.getBoundingClientRect();
@@ -385,15 +374,10 @@ function imagepuzzle(){
             imagearray[i]=document.createElement('div')
             imagearray[i].style.backgroundImage=`url(${imagesrc})`
             imagearray[i].style.backgroundSize= `${puzzleRect.width}px ${puzzleRect.height}px`
-            
             remainder=(i%gridlength)
             floorvalue=Math.floor(i/gridlength)
-            
-            
             imagearray[i].style.backgroundPosition=100/(gridlength-1)*(remainder)+'% '+100/(gridlength-1)*(floorvalue)+'%' 
-            
             imagearray[i].style.backgroundRepeat = "no-repeat";
-        
         }
         else{
             imagearray[i]=document.createElement('div')
@@ -428,43 +412,29 @@ function displayimagepuzzle(){
     }
 }
 
-
-
-
-
 const imageupload=document.getElementById('imageInput')
 const Urlinput = document.getElementById('linkInput')
 
-    imageupload.addEventListener('change',function(){
-        
+imageupload.addEventListener('change',function(){
+    const file=this.files[0]
+    const reader=new FileReader()
+    reader.onload=function(e){
+        imagesrc=e.target.result   
+    }
+    reader.readAsDataURL(file)
+    startingnow=true
+    numberpuzzle=false
+    imagepuzzletrue=true
+    
+})
 
-        const file=this.files[0]
-        const reader=new FileReader()
-        
-        reader.onload=function(e){
-        
-                imagesrc=e.target.result
-            
-            
-          
-        }
-        reader.readAsDataURL(file)
-        
-            startingnow=true
-        numberpuzzle=false
-        imagepuzzletrue=true
-        
-        
-    })
-
-    Urlinput.addEventListener('change',function(){
-  
-        imagesrc=this.value
-        startingnow=true
-        numberpuzzle=false
-        imagepuzzletrue=true
+Urlinput.addEventListener('change',function(){
+    imagesrc=this.value
+    startingnow=true
+    numberpuzzle=false
+    imagepuzzletrue=true
  
-    })
+})
 
    
     
