@@ -31,7 +31,7 @@ body {
     user-select: none;
     border:0.01vmin solid black;
     background-size: 100%;
-    font-size: 100px;
+    
 }
 
 .puzzle-cell {
@@ -77,17 +77,15 @@ body {
     background-image: url('files/puzzleback.jpg');
 }
 #gridinput{
-
     font-size: 2vmin;
     width: 30vmin;
-    
     height:3vmin
 }
 
 button {
     cursor: pointer;
     background-color: transparent;
-    width: 14vmin;
+    width: 12.5vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -113,17 +111,6 @@ button {
     background-image: url('files/photo.png');
 }
 
-#linklabel {
-    cursor: pointer;
-    display: inline-block;
-    width: 12.5vmin;
-    height: 7vmin;
-    margin-top: 5vmin;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url('files/link.png');
-}
   
 #imageInput {
     display: none;
@@ -147,7 +134,7 @@ button {
 #linkInput:focus {
     width: 25vmin; 
     height: 7vmin; 
-    font-size: 20px;
+
     font-size: 3vmin;
     background-image: none;
 }
@@ -166,4 +153,68 @@ button {
     background-position: center;
     border: none;
     background-image: url('files/enter.png');
+}
+
+@media screen  and (orientation:portrait){
+    .gamedeets{
+        width:100%;
+        height:30vmax;
+        font-size:7vmax;
+        text-align: center;
+    }
+    #puzzle{
+        width:45vmax;
+        height: 45vmax;
+        border:0.01vmax solid black;
+    }
+    .buttons{
+        height:10vmax;
+        width:100%;
+    }
+    .selectgrid{
+        height:15vmax;
+        width:100%
+    }
+    #gridinput{
+        width: 60%;
+        height:4.5vmax;
+        font-size:3vmax;
+    }
+    button{
+        width:25%;
+        height:10vmax;
+        margin-top:2.5vmax;
+    }
+    #uploadLabel{
+        margin-left:5%;
+        margin-right: 5%;
+        width:15%;
+        height: 10vmax;
+        margin-top:2.5vmax;
+    }
+    #linkInput{
+        margin-left:5%;
+        margin-right: 5%;
+        width:15%;
+        height:10vmax;
+        margin-top:2.5vmax;
+    }
+    #linkInput:focus{
+        width:50%;
+        font-size:4vmax;
+    }
+    #enter{
+        width:15%;
+        height:30%;
+    }
+    #pleaserandom{
+        margin-left: 5%;
+        width: 15%;
+        margin-right:5%;
+    }
+    #pleasesolve{
+        margin-left: 5%;
+        width:15%;
+        margin-right:5%;
+    }
 }
