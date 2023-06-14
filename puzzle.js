@@ -3,6 +3,7 @@ swapped=false
 let fromindex
 let toindex
 let temp
+let winarray=[]
 
 const randombutton=document.getElementById('pleaserandom')
 const solvebutton=document.getElementById('pleasesolve')
@@ -18,6 +19,7 @@ let totalboxes
 let fontsize
 let swaprow,swapcol
 const noinpuzzles=document.getElementsByClassName('puzzle-number')
+let randomized=false
 
 function main(){
     const puzzleRect = puzzleboard.getBoundingClientRect();
@@ -26,14 +28,18 @@ function main(){
 
     if(numberpuzzle==true){
         if(startingnow){
+            randomized=false
             numberpuzzleshow()
         }
         displaypuzzlenumber()    
+
+        
     }
 
     if(imagepuzzletrue){
         
         if(startingnow){
+            randomized=false
             imagepuzzle()
         }
         displayimagepuzzle()
@@ -74,9 +80,9 @@ function displaypuzzlenumber(){
         const wordelement = document.createElement('div')
         wordelement.style.gridColumnStart=arrayforpuzzle[i][1]
         wordelement.style.gridRowStart=arrayforpuzzle[i][0]
+        wordelement.style.border='0.1vmin solid black'
         wordelement.innerHTML=arrayforpuzzle[i][2]
         wordelement.classList.add('puzzle-number')
-        
         puzzleboard.appendChild(wordelement)
     }
     fontsize=Math.min(cellHeight/3,cellWidth/3)
@@ -128,6 +134,7 @@ function swap(){
             })
             actuallyswap(fromindex,toindex)
         }
+        
     }
     if(numberpuzzle){
         for(let i=0;i<totalboxes;i++){
@@ -145,21 +152,45 @@ function swap(){
             })
             actuallyswap(fromindex,toindex)
         }
+        
     }
+   
 }
 
 let temparray=[]
+
 
 function actuallyswap(index1,index2){
     if(numberpuzzle){
         temp=arrayforpuzzle[index1][2]
         arrayforpuzzle[index1][2]=arrayforpuzzle[index2][2]
         arrayforpuzzle[index2][2]=temp
+        console.log(winarray,arrayofnumbers)
+        for(let i=0;i<totalboxes;i++){
+            console.log(arrayforpuzzle[i][2])
+            winarray[i]=arrayforpuzzle[i][2]
+        }
+        if(checkwin(winarray,arrayofnumbers)){
+            displaypuzzlenumber()
+            if(confirm("Congrats! You've solved the puzzle, Try again")){
+                startingnow=0
+            }
+        }
     }
     if(!numberpuzzle){
         temparray=arrayforimage[index1][2]
         arrayforimage[index1][2]=arrayforimage[index2][2]
         arrayforimage[index2][2]=temparray
+
+        for(let i=0;i<totalboxes;i++){
+            winarray[i]=arrayforimage[i][2][1]
+        }
+        if(checkwin(winarray,referencearray)){
+            displayimagepuzzle()
+            if(confirm("Congrats! You've solved the puzzle, Try again")){
+                startingnow=0
+            }
+        }
     }   
 }
 
@@ -249,7 +280,8 @@ function actualrandomizer(){
             }
         }
     }
-   
+   randomized=true
+   console.log(winarray)
 }
 
 let ninverse
@@ -354,6 +386,7 @@ let remainder
 let floorvalue
 let arrayforimage=[]
 let imagesrc
+let referencearray=[]
 
 function imagepuzzle(){
 
@@ -378,11 +411,15 @@ function imagepuzzle(){
             floorvalue=Math.floor(i/gridlength)
             imagearray[i].style.backgroundPosition=100/(gridlength-1)*(remainder)+'% '+100/(gridlength-1)*(floorvalue)+'%' 
             imagearray[i].style.backgroundRepeat = "no-repeat";
+            referencearray[i]=i+1
         }
         else{
             imagearray[i]=document.createElement('div')
             imagearray[i].style.backgroundImage="url('files/empty.png')"
+            referencearray[i]=0
         }
+        
+
     }
     
     for(let i=1;i<gridlength+1;i++){
@@ -433,7 +470,7 @@ imageupload.addEventListener('change',function(){
 })
 
 Urlinput.addEventListener('change',function(){
-    
+
     imagesrc=this.value
     startingnow=true
     numberpuzzle=false
@@ -441,5 +478,33 @@ Urlinput.addEventListener('change',function(){
  
 })
 
+const enterbutton=document.getElementById('enter')
+const gridinputtag=document.getElementById('gridinput')
+
+enterbutton.addEventListener('click',function(){
+    const inputValue = gridinputtag.value
+    gridlength=Number(inputValue)
+    startingnow=true
+    if(numberpuzzle){
+        arrayforpuzzle=[]
+        arrayofnumbers=[]
+        starting=0
+    }
+    if(imagepuzzle){
+        arrayforimage=[]
+        imagearray=[]
+        starting=0
+    }
+})
    
-    
+function checkwin(array1,array2){
+    if(array1.length==0){
+        return false
+    }
+    for(let i=0;i<array1.length;i++){
+        if(array1[i]!==array2[i]){
+            return false
+        }
+    }
+    return true
+}
