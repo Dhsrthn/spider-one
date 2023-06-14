@@ -161,6 +161,7 @@ button {
         height:25vmax;
         font-size:7vmax;
         text-align: center;
+        overflow:auto;
     }
     #puzzle{
         width:40vmax;
