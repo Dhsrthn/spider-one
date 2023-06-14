@@ -172,7 +172,7 @@ function actuallyswap(index1,index2){
         }
         if(checkwin(winarray,arrayofnumbers)){
             displaypuzzlenumber()
-            if(confirm("Congrats! You've solved the puzzle, Try again")){
+            if(confirm("Congrats! You've solved the puzzle, Play again")){
                 startingnow=0
             }
         }
@@ -187,7 +187,7 @@ function actuallyswap(index1,index2){
         }
         if(checkwin(winarray,referencearray)){
             displayimagepuzzle()
-            if(confirm("Congrats! You've solved the puzzle, Try again")){
+            if(confirm("Congrats! You've solved the puzzle, Play again")){
                 startingnow=0
             }
         }
@@ -490,7 +490,7 @@ enterbutton.addEventListener('click',function(){
         arrayofnumbers=[]
         starting=0
     }
-    if(imagepuzzle){
+    if(imagepuzzletrue){
         arrayforimage=[]
         imagearray=[]
         starting=0
