@@ -418,17 +418,22 @@ const Urlinput = document.getElementById('linkInput')
 imageupload.addEventListener('change',function(){
     const file=this.files[0]
     const reader=new FileReader()
+    
     reader.onload=function(e){
         imagesrc=e.target.result   
+        console.log(imagesrc)
+        startingnow=true
+        numberpuzzle=false
+        imagepuzzletrue=true
     }
+    
     reader.readAsDataURL(file)
-    startingnow=true
-    numberpuzzle=false
-    imagepuzzletrue=true
+
     
 })
 
 Urlinput.addEventListener('change',function(){
+    
     imagesrc=this.value
     startingnow=true
     numberpuzzle=false
