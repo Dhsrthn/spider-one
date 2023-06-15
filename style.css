@@ -8,6 +8,60 @@ body {
     overflow: hidden;
 }
 
+#sidenav{
+    height:100%;
+    width:0;
+    position:fixed;
+    z-index:1;
+    top:0;
+    left:0;
+    background-color: rgba(203, 220, 207, 0.85);
+    overflow-x:hidden;
+    transition:0.5s;
+    padding-top:1vmin;
+}
+
+#opener{
+    cursor: pointer;
+    position:fixed;
+    top:0;
+    left:0;
+    height:5vmin;
+    width:5vmin;
+    background-image: url('files/menu.png');
+    background-size: 100%;
+}
+
+.navitems{
+    font-size:3vmin;
+    color: #e11212;
+}
+
+.navitems:hover{
+    color:#f1f1f1;
+}
+
+/* .mysidenav .closebtn{
+    position: absolute;
+    top:0;
+    left:45vmin;
+    font-size: 3vmin;
+    margin-left: 5vmin;
+    width:5vmin;
+    height: 5vmin;
+    background-image: url('files/close.png');
+    background-size: 100%;
+
+} */
+.mysidenav .closebtn {
+    position:relative;
+    top: 0;
+    left: 40vmin;
+    font-size: 5vmin;
+    color:black;
+}
+
+
 .gamedeets{
     width:50vmin;
     height:25vmin;
@@ -85,7 +139,7 @@ body {
 button {
     cursor: pointer;
     background-color: transparent;
-    width: 12.5vmin;
+    width: 10vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -102,7 +156,7 @@ button {
 #uploadLabel {
     cursor: pointer;
     display: inline-block;
-    width: 12.5vmin;
+    width: 10vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -119,7 +173,7 @@ button {
 #linkInput{
     cursor: pointer;
     display: inline-block;
-    width: 12.5vmin;
+    width: 10vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -128,15 +182,16 @@ button {
     background-image: url('files/link.png');
     font-size: 16px;
     transition: width 0.3s, height 0.3s;
+    
 }
 
 
 #linkInput:focus {
     width: 25vmin; 
     height: 7vmin; 
-
     font-size: 3vmin;
     background-image: none;
+
 }
 
 
@@ -161,7 +216,7 @@ button {
         height:25vmax;
         font-size:7vmax;
         text-align: center;
-        overflow:auto;
+        
     }
     #puzzle{
         margin:0 auto;
@@ -183,23 +238,24 @@ button {
         font-size:3vmax;
     }
     button{
-        width:25%;
+        width:20%;
         height:10vmax;
         margin-top:2.5vmax;
     }
     #uploadLabel{
         margin-left:5%;
         margin-right: 5%;
-        width:15%;
+        width:20%;
         height: 10vmax;
         margin-top:2.5vmax;
     }
     #linkInput{
         margin-left:5%;
         margin-right: 5%;
-        width:15%;
-        height:10vmax;
-        margin-top:2.5vmax;
+        width:20%;
+        height:5vmax;
+        margin-top:5vmax;
+        
     }
     #linkInput:focus{
         width:50%;
@@ -219,4 +275,12 @@ button {
         width:15%;
         margin-right:5%;
     }
+    #opener{
+        height:5vmax;
+        width:5vmax;
+    }
+    .mysidenav .closebtn {
+       font-size: 5vmax;
+    }
+
 }

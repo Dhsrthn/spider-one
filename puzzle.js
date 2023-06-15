@@ -7,6 +7,7 @@ let winarray=[]
 
 const randombutton=document.getElementById('pleaserandom')
 const solvebutton=document.getElementById('pleasesolve')
+const savebutton=document.getElementById('savestate')
 let cellHeight,cellWidth
 let startingnow=true
 let numberpuzzle=true
@@ -22,6 +23,8 @@ const noinpuzzles=document.getElementsByClassName('puzzle-number')
 let randomized=false
 
 function main(){
+
+   
     const puzzleRect = puzzleboard.getBoundingClientRect();
     cellWidth = puzzleRect.width / gridlength;
     cellHeight = puzzleRect.height / gridlength;
@@ -32,8 +35,6 @@ function main(){
             numberpuzzleshow()
         }
         displaypuzzlenumber()    
-
-        
     }
 
     if(imagepuzzletrue){
@@ -109,6 +110,10 @@ function clicked(event) {
   if(event.target==randombutton ){
         actualrandomizer()
   } 
+  if(event.target==savebutton){
+    savestate()
+  }
+  
   if(event.target==solvebutton){
     if(numberpuzzle){
         solvenumberpuzzle()
@@ -308,77 +313,6 @@ function numberofinversions(anyarray){
     return ninverse
 }
 
-let initialindex
-let inir
-let inic
-let possibilities=[]
-let actualpossible=[]
-let checkings=[]
-let temporary
-let numbersinverse=[]
-let reference=[]
-let movement=[]
-let firstsolve=1
-
-function solvenumberpuzzle(){
-    actualpossible=[]
-        for(let i=0;i<totalboxes;i++){
-            if(arrayforpuzzle[i][2]==' '){
-                initialindex=i
-                inir=arrayforpuzzle[i][1]
-                inic=arrayforpuzzle[i][0]
-            }
-        }
-        possibilities[0]=[inic+1,inir]
-        possibilities[1]=[inic-1,inir]
-        possibilities[2]=[inic,inir+1]
-        possibilities[3]=[inic,inir-1]
-
-        for(let i=0;i<totalboxes;i++){
-            for(let j=0;j<4;j++){
-               if(arrayforpuzzle[i][0]==possibilities[j][0] && arrayforpuzzle[i][1]==possibilities[j][1]){
-                    actualpossible.push(i)
-               }
-            }
-        }
-        for(i=0;i<actualpossible.length;i++){
-            checkings.push([])
-            reference.push([])
-        }
-
-        for(let i=0;i<actualpossible.length;i++){
-            for(let j=0;j<totalboxes;j++){
-                checkings[i].push([arrayforpuzzle[j][2]])
-            }
-        }
-        for(let i=0;i<actualpossible.length;i++){
-            temporary=checkings[i][initialindex]
-            checkings[i][initialindex]=checkings[i][actualpossible[i]]
-            checkings[i][actualpossible[i]]=temporary
-        }
-        for(let i=0;i<checkings.length;i++){
-            numbersinverse[i]=numberofinversions(checkings[i])
-            reference[i]=[i,numbersinverse[i],actualpossible[i]]
-            
-        }
-        reference.sort((a,b)=> b[0]-a[0])
-
-        if(firstsolve==1){
-            actuallyswap(initialindex,actualpossible[0])
-            movement.push([initialindex,actualpossible[0]])
-            firstsolve=0
-        }
-        
-        if(movement.includes([initialindex,actualpossible[0]])){
-            actuallyswap(initialindex,actuallyswap[1])
-            movement.push([initialindex,actualpossible[1]])
-        }
-        else{
-            actuallyswap(initialindex,actualpossible[0])
-            movement.push([initialindex,actualpossible[0]])
-        }
-        
-}
 
 let imagearray=[]
 let originaldimension
@@ -389,7 +323,9 @@ let imagesrc
 let referencearray=[]
 
 function imagepuzzle(){
-
+    arrayforimage=[]
+    imagearray=[]
+    console.log(imagesrc)
     starting=0
     const puzzleRect = puzzleboard.getBoundingClientRect();
     totalboxes=gridlength**2
@@ -407,6 +343,7 @@ function imagepuzzle(){
             imagearray[i]=document.createElement('div')
             imagearray[i].style.backgroundImage=`url(${imagesrc})`
             imagearray[i].style.backgroundSize= `${puzzleRect.width}px ${puzzleRect.height}px`
+            imagearray[i].style.border='0.5vmin solid black'
             remainder=(i%gridlength)
             floorvalue=Math.floor(i/gridlength)
             imagearray[i].style.backgroundPosition=100/(gridlength-1)*(remainder)+'% '+100/(gridlength-1)*(floorvalue)+'%' 
@@ -421,7 +358,7 @@ function imagepuzzle(){
         
 
     }
-    
+    console.log('hi')
     for(let i=1;i<gridlength+1;i++){
         for(let j=1;j<gridlength+1;j++){
             if(!(i==gridlength && j==gridlength)){
@@ -434,15 +371,28 @@ function imagepuzzle(){
         }
 
     }
+    if(loaded){
+        for (let i=0;i<totalboxes;i++){
+            if(updateindexarray[i]!==0){
+                arrayforimage[i][2]=[imagearray[updateindexarray[i]-1],updateindexarray[i]]
+            }
+            else{
+                arrayforimage[i][2]=[imagearray[totalboxes-1],0]
+            }
+        }
+        console.log(arrayforimage)
+        loaded=false
+    }
 
     displayimagepuzzle()
     startingnow=false
-    
 }
 
 function displayimagepuzzle(){
+    const puzzleRect = puzzleboard.getBoundingClientRect();
     puzzleboard.innerHTML='';
     for(let i=0;i<totalboxes;i++){
+        arrayforimage[i][2][0].style.backgroundSize= `${puzzleRect.width}px ${puzzleRect.height}px`
         arrayforimage[i][2][0].style.gridColumnStart=arrayforimage[i][1]
         arrayforimage[i][2][0].style.gridRowStart=arrayforimage[i][0]
         puzzleboard.appendChild(arrayforimage[i][2][0])
@@ -458,10 +408,10 @@ imageupload.addEventListener('change',function(){
     
     reader.onload=function(e){
         imagesrc=e.target.result   
-        console.log(imagesrc)
         startingnow=true
         numberpuzzle=false
         imagepuzzletrue=true
+        loaded=false
     }
     
     reader.readAsDataURL(file)
@@ -470,12 +420,11 @@ imageupload.addEventListener('change',function(){
 })
 
 Urlinput.addEventListener('change',function(){
-
     imagesrc=this.value
     startingnow=true
     numberpuzzle=false
     imagepuzzletrue=true
- 
+    loaded=false
 })
 
 const enterbutton=document.getElementById('enter')
@@ -483,18 +432,24 @@ const gridinputtag=document.getElementById('gridinput')
 
 enterbutton.addEventListener('click',function(){
     const inputValue = gridinputtag.value
-    gridlength=Number(inputValue)
-    startingnow=true
-    if(numberpuzzle){
-        arrayforpuzzle=[]
-        arrayofnumbers=[]
-        starting=0
+    if(Number(inputValue)>2){
+        gridlength=Number(inputValue)
+        startingnow=true
+        if(numberpuzzle){
+            arrayforpuzzle=[]
+            arrayofnumbers=[]
+            starting=0
+            startingnow=true
+        }
+        if(imagepuzzletrue){
+            startingnow=true
+            starting=0
+        }
     }
-    if(imagepuzzletrue){
-        arrayforimage=[]
-        imagearray=[]
-        starting=0
-    }
+    else[
+        alert('enter value more than 2')
+    ]
+    
 })
    
 function checkwin(array1,array2){
@@ -508,3 +463,130 @@ function checkwin(array1,array2){
     }
     return true
 }
+
+
+
+function solvepuzzle(){
+
+}
+
+
+let tempsavearray=[]
+let tempindexarray=[]
+
+function savestate(){
+    if(numberpuzzle){
+        tempsavearray=[]
+        tempsavearray.push(0)
+        tempsavearray.push(arrayofnumbers)
+        tempsavearray.push(arrayforpuzzle)
+        tempsavearray.push(gridlength)
+        savedarray.push(tempsavearray)
+        localStorage.setItem(hai,JSON.stringify(savedarray))
+    }
+    
+    else{
+        console.log('reach')
+        tempsavearray=[]
+        tempsavearray.push(1)
+        
+        tempsavearray.push(btoa(imagesrc))
+        console.log(btoa(imagesrc))
+        for(let i=0;i<totalboxes;i++){
+            tempindexarray[i]=arrayforimage[i][2][1]
+        }
+        tempsavearray.push(tempindexarray)
+        tempsavearray.push(gridlength)
+        savedarray.push(tempsavearray)
+        console.log(tempsavearray)
+        localStorage.setItem(hai,JSON.stringify(savedarray))
+    }
+        
+}
+
+let updateindexarray=[]
+
+let displaysave=[]
+
+function displaysaved(){
+    getsavedarray()
+   document.getElementById('sidenav').innerHTML=''
+   displaysave=[]
+   console.log(typeof(document.getElementById('sidenav')))
+   const linkelement=document.createElement('a')
+   linkelement.href="javascript:void(0)"
+   const timesSymbol = document.createTextNode('\u00D7');
+   linkelement.appendChild(timesSymbol);
+   linkelement.onclick=function(){
+        closeNav()
+   }
+   linkelement.classList.add('closebtn')
+   document.getElementById('sidenav').appendChild(linkelement)
+    console.log(displaysave)
+    if(savedarray.length!=0){
+        for (let i=0;i<savedarray.length;i++){
+            displaysave.push([])
+            displaysave[i]=document.createElement('div')
+            displaysave[i].classList.add('navitems')
+            displaysave[i].style.border='0.1vmin solid black'
+            displaysave[i].innerHTML=`Save ${i+1}`
+            document.getElementById('sidenav').appendChild(displaysave[i])
+            displaysave[i].addEventListener('click',function(){
+                
+                if(savedarray[i][0]==0){
+                    arrayofnumbers=savedarray[i][1]
+                    arrayforpuzzle=savedarray[i][2]
+                    gridlength=savedarray[i][3]
+                    console.log(typeof(savedarray[i][3]))
+                    numberpuzzle=true
+                    imagepuzzletrue=false
+                    startingnow=false
+                }
+                if(savedarray[i][0]==1){
+                    updateindexarray=[]
+                    console.log(savedarray[i])
+                    imagesrc=atob(savedarray[i][1])
+                    updateindexarray=savedarray[i][2]
+                    console.log(updateindexarray)
+                    gridlength=savedarray[i][3]
+                    numberpuzzle=false
+                    imagepuzzletrue=true
+                    startingnow=false
+                    loaded=true
+                    imagepuzzle()
+                }
+            })
+        }
+    }
+    
+    
+}
+
+let loaded=false
+
+function openNav(){
+    document.getElementById('sidenav').style.width='50vmin'
+    displaysaved()
+}
+
+function closeNav(){
+    document.getElementById("sidenav").innerHTML=''
+    sidenav.style.width = "0";
+}
+
+let val1
+const hai='stringtosave'
+let savedarray=[]
+
+function getsavedarray(){
+    
+    val1= localStorage.getItem(hai)
+    if(val1==null){
+        savedarray=[]
+    }
+    else{
+        savedarray=JSON.parse(val1)
+    }
+
+}
+

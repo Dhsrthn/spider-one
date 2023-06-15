@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="sidenav" class="mysidenav">
+        
+
+       
+        <a href="javascript:void(0)" id="closebutton" class="closebtn" onclick="closeNav()">&times;</a>
     
-      
+    </div>
+    <span onclick="openNav()" id="opener"> </span>
     
     
     <div class="game">
@@ -24,11 +30,12 @@
     
         <div class="buttons">
             <button id="pleaserandom" style="background-image: url(files/random.png);" title="click to randomize"></button>
+            <button id="savestate" style="background-image: url(files/save.png);" title="click to save state"></button>
             <button id="pleasesolve" style="background-image: url(files/solve.png);" title="click to solve"></button>
            
             <input type="text" id="linkInput" title="Enter Link URL">
-            <label for="imageInput" id="uploadLabel" title="click to select image" > </label>
-            <input type="file" id="imageInput" title="click to select image" accept="image/*">
+            <label for="imageInput" id="uploadLabel" title="click to select image" aria-placeholder="enter link"> </label>
+            <input type="file" id="imageInput" title="click to select image" accept="image/*" >
             
         </div>
         <div class="selectgrid">
