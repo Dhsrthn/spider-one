@@ -8,6 +8,11 @@ body {
     overflow: hidden;
 }
 
+.game{
+    background-image: url('files/puzzleback.jpg');
+
+
+}
 #sidenav{
     height:100%;
     width:0;
@@ -17,7 +22,7 @@ body {
     left:0;
     background-color: rgba(203, 220, 207, 0.85);
     overflow-x:hidden;
-    transition:0.5s;
+    transition:0.2s;
     padding-top:1vmin;
 }
 
@@ -33,30 +38,35 @@ body {
 }
 
 .navitems{
-    font-size:3vmin;
-    color: #e11212;
+    font-size:5vmin;
+    color: #31b2da;
+    font-family: 'Lucida Sans';
+    text-shadow: 0.1vmin 0.1vmin black;
+    text-align: center;
+    margin-top: 0.5vmin;
+    background-image: url("files/savecell.jpg");
+    
+
+}
+.puzzleimages{
+    background-color: white;
+    
+}
+
+.puzzleimages img{
+    display: block; 
+    mix-blend-mode: multiply;
 }
 
 .navitems:hover{
     color:#f1f1f1;
 }
 
-/* .mysidenav .closebtn{
-    position: absolute;
-    top:0;
-    left:45vmin;
-    font-size: 3vmin;
-    margin-left: 5vmin;
-    width:5vmin;
-    height: 5vmin;
-    background-image: url('files/close.png');
-    background-size: 100%;
 
-} */
 .mysidenav .closebtn {
     position:relative;
     top: 0;
-    left: 40vmin;
+    left: 60vmin;
     font-size: 5vmin;
     color:black;
 }
@@ -72,7 +82,7 @@ body {
     align-items: center;
     justify-content: center;
     font-family: 'puzzle';
-    background-image: url('files/puzzleback.jpg');
+    border-radius: 1vmin;
 }
 
 #puzzle{
@@ -83,16 +93,12 @@ body {
     grid-template-rows: repeat(3, 1fr);
     justify-content: center;
     user-select: none;
-    border:0.01vmin solid black;
     background-size: 100%;
+   
     
 }
 
-.puzzle-cell {
-    position: relative;
-    overflow: hidden;
-    
-}
+
 
 .puzzle-image {
     max-width: 100%;
@@ -100,14 +106,12 @@ body {
     display: block;
 }
 
-
 .puzzle-number {
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 @font-face {
     font-family: 'puzzle' ;
@@ -118,17 +122,16 @@ body {
     display: flex;
     height:15vmin;
     width:50vmin;
-    background-size: 100%;
-    background-image: url('files/puzzleback.jpg');
+    background-size: auto;
+    border-radius: 3vmin;
 }
 
 .selectgrid{
     display: flex;
     align-items: center;
     justify-content: center;
-    height:7vmin;
+    height:9vmin;
     width:50vmin;
-    background-image: url('files/puzzleback.jpg');
 }
 #gridinput{
     font-size: 2vmin;
@@ -146,6 +149,14 @@ button {
     background-repeat: no-repeat;
     background-position: center;
     border: none;
+    padding: 1vmin 2vmin;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3)
+    
+    
+}
+
+button:hover{
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 .puzzlenumberbackground {
@@ -157,12 +168,18 @@ button {
     cursor: pointer;
     display: inline-block;
     width: 10vmin;
-    height: 7vmin;
+    height: 5vmin;
     margin-top: 5vmin;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('files/photo.png');
+    padding: 1vmin 2vmin;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3)
+}
+
+#uploadLabel:hover{
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
 }
 
   
@@ -174,7 +191,7 @@ button {
     cursor: pointer;
     display: inline-block;
     width: 10vmin;
-    height: 7vmin;
+    height: 6.8vmin;
     margin-top: 5vmin;
     background-size: contain;
     background-repeat: no-repeat;
@@ -225,7 +242,7 @@ button {
         border:0.01vmax solid black;
     }
     .buttons{
-        height:10vmax;
+        height:14vmax;
         width:100%;
     }
     .selectgrid{
@@ -245,9 +262,9 @@ button {
     #uploadLabel{
         margin-left:5%;
         margin-right: 5%;
-        width:20%;
-        height: 10vmax;
-        margin-top:2.5vmax;
+        width:10%;
+        height: 9vmax;
+        
     }
     #linkInput{
         margin-left:5%;
