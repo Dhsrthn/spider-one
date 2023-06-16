@@ -564,6 +564,7 @@ function displaysaved(){
                     numberpuzzle=true
                     imagepuzzletrue=false
                     startingnow=false
+                    closeNav()
                 }
                 if(savedarray[i][0]==1){
                     updateindexarray=[]
@@ -575,6 +576,7 @@ function displaysaved(){
                     startingnow=false
                     loaded=true
                     imagepuzzle()
+                    closeNav()
                 }
             })
         }
