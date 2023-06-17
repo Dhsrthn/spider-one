@@ -26,7 +26,7 @@ function main(){
     cellWidth = puzzleRect.width / gridlength;
     cellHeight = puzzleRect.height / gridlength;
 
-    if(numberpuzzle==true){
+    if(numberpuzzle){
         if(startingnow){
             randomized=false
             numberpuzzleshow()
@@ -75,6 +75,7 @@ function displaypuzzlenumber(){
     totalboxes=gridlength**2
     const puzzleRect = puzzleboard.getBoundingClientRect();
     puzzleboard.innerHTML = '';
+    puzzleboard.style.background='none'
     puzzleboard.style.boxShadow='0 10px 10px rgba(0,0,0,0.3)'
     puzzleboard.style.gridTemplateColumns = `repeat(${gridlength}, 1fr)`;
     puzzleboard.style.gridTemplateRows = `repeat(${gridlength}, 1fr)`;
@@ -330,8 +331,8 @@ function imagepuzzle(){
     totalboxes=gridlength**2
     puzzleboard.style.gridTemplateColumns = `repeat(${gridlength}, 1fr)`;
     puzzleboard.style.gridTemplateRows = `repeat(${gridlength}, 1fr)`;
-   
-    puzzleboard.style.background='none';
+    
+    puzzleboard.style.backgroundImage='none';
     for(let i=0;i<totalboxes;i++){
         imagearray.push([])
     }
@@ -393,6 +394,7 @@ function imagepuzzle(){
 function displayimagepuzzle(){
     const puzzleRect = puzzleboard.getBoundingClientRect();
     puzzleboard.innerHTML='';
+    puzzleboard.style.boxShadow='0 10px 10px rgba(0,0,0,0.3)'
     puzzleboard.style.backgroundImage=`url(${imagesrc})`
     puzzleboard.style.backgroundSize= `${puzzleRect.width}px ${puzzleRect.height}px`
     for(let i=0;i<totalboxes;i++){
@@ -406,7 +408,7 @@ function displayimagepuzzle(){
 
        
         if(arrayforimage[i][2][1]==0){
-            arrayforimage[i][2][0].style.background='rgba(0,0,0,0.75)'
+            arrayforimage[i][2][0].style.background='rgba(0,0,0,0.50)'
         }
         puzzleboard.appendChild(arrayforimage[i][2][0])
     }
@@ -460,7 +462,7 @@ enterbutton.addEventListener('click',function(){
         }
     }
     else[
-        alert('enter value more than 2')
+        alert('Enter value more than 2')
     ]
     
 })
@@ -496,19 +498,15 @@ function savestate(){
     }
     
     else{
-
         tempsavearray=[]
         tempsavearray.push(1)
-        
         tempsavearray.push(btoa(imagesrc))
-
         for(let i=0;i<totalboxes;i++){
             tempindexarray[i]=arrayforimage[i][2][1]
         }
         tempsavearray.push(tempindexarray)
         tempsavearray.push(gridlength)
         savedarray.push(tempsavearray)
-
         localStorage.setItem(hai,JSON.stringify(savedarray))
     }
     alert('Saved currrent state')
@@ -521,26 +519,36 @@ let displaysave=[]
 function displaysaved(){
    
     getsavedarray()
-   document.getElementById('sidenav').innerHTML=''
-   displaysave=[]
-
-   const linkelement=document.createElement('a')
-   linkelement.href="javascript:void(0)"
-   const timesSymbol = document.createTextNode('\u00D7');
-   linkelement.appendChild(timesSymbol);
-   linkelement.onclick=function(){
+    document.getElementById('sidenav').innerHTML=''
+    displaysave=[]
+    const linkelement=document.createElement('a')
+    linkelement.href="javascript:void(0)"
+    const timesSymbol = document.createTextNode('\u00D7');
+    linkelement.appendChild(timesSymbol);
+    linkelement.onclick=function(){
+         closeNav()
+    }
+    linkelement.classList.add('closebtn')
+    document.getElementById('sidenav').appendChild(linkelement)
+    const defaultelement=document.createElement('div')
+    defaultelement.classList.add('navitems')
+    defaultelement.innerText='Default 3*3'
+    defaultelement.addEventListener('click',function(){
+        startingnow=true
+        arrayforpuzzle=[]
+        arrayofnumbers=[]
+        gridlength=3
+        numberpuzzle=true
+        imagepuzzletrue=false
         closeNav()
-   }
-  
-   linkelement.classList.add('closebtn')
-   document.getElementById('sidenav').appendChild(linkelement)
+    })
+    document.getElementById('sidenav').appendChild(defaultelement)
     if(savedarray.length==0){
-  
     const text=document.createElement('div')
-    text.innerHTML='Your saved files appear here'
+    text.innerHTML='Your saved puzzles appear here'
     text.classList.add('navitems')
     document.getElementById('sidenav').appendChild(text)
-}
+    }
     if(savedarray.length!=0){
         for (let i=0;i<savedarray.length;i++){
             displaysave.push([])
@@ -581,8 +589,6 @@ function displaysaved(){
             })
         }
     }
-    
-    
 }
 
 let loaded=false
