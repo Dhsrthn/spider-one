@@ -408,7 +408,8 @@ function displayimagepuzzle(){
 
        
         if(arrayforimage[i][2][1]==0){
-            arrayforimage[i][2][0].style.background='rgba(0,0,0,0.50)'
+            arrayforimage[i][2][0].style.background='rgba(0,0,0,0.70)'
+            arrayforimage[i][2][0].style.border='0.3vmin solid red'
         }
         puzzleboard.appendChild(arrayforimage[i][2][0])
     }
