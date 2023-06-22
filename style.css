@@ -227,10 +227,6 @@ button:hover{
     background-image: url('files/enter.png');
 }
 
-.move-transition {
-    transition: transform 0.9s ease;
-  }
-
 @media screen  and (orientation:portrait){
     .gamedeets{
         width:100%;
