@@ -171,6 +171,7 @@ let temparray=[]
 
 function actuallyswap(index1,index2){
     if(numberpuzzle){
+        winarray=[]
         temp=arrayforpuzzle[index1][2]
         arrayforpuzzle[index1][2]=arrayforpuzzle[index2][2]
         arrayforpuzzle[index2][2]=temp
@@ -183,8 +184,10 @@ function actuallyswap(index1,index2){
                 startingnow=0
             }
         }
+
     }
     if(!numberpuzzle){
+        winarray=[]
         temparray=arrayforimage[index1][2]
         arrayforimage[index1][2]=arrayforimage[index2][2]
         arrayforimage[index2][2]=temparray
@@ -620,3 +623,91 @@ function getsavedarray(){
 
 }
 
+let priorityarray=[]
+
+function solvefunction(){
+    priorityarray=[]
+}
+
+class gridstate{
+    constructor(puzzlestate,gridlen,called,moves) {
+        this.arraygame=puzzlestate
+        this.gridlen=gridlen
+        this.goalstate=[]
+        this.setgoalstate=0
+        this.gridsize=gridlen*gridlen
+        this.called=called
+        this.moves=moves
+    }
+
+    solve(){
+        this.requiredinfo=[]
+        if(this.setgoalstate==0){
+            this.starting=1
+            for(let i=1;i<this.gridlen+1;i++){
+                for(let j=1;j<this.gridlen+1;j++){
+                    if(!(i==this.gridlen && j==this.gridlen)){
+                        this.goalstate.push([i,j,this.starting])
+                        this.starting++
+                    }else{
+                        this.goalstate.push([i,j,0])
+                    }
+                }
+            }
+        }
+        this.hamilton()
+        this.requiredinfo.push([this.arraygame],this.hamiltonval,this.moves)
+        priorityarray.push(this.requiredinfo)
+        this.generatenew()
+    }
+    
+    hamilton(){
+        this.hamiltonval=0
+        for(let i=0;i<this.gridsize;i++){
+            if(this.arraygame[i][2]!==this.goalstate[i][2]){
+                this.hamiltonval++
+            }
+        }
+        this.hamiltonval=this.hamiltonval+this.called
+    }
+    
+    possibleways(){
+        this.possibledirections=[]
+        for(let i=0;i<this.gridsize;i++){
+            if(this.arraygame[i][2]==0){
+                this.emptypos=i
+            }
+        }
+        if(this.arraygame[this.emptypos][0]+1<=this.gridlen){
+            this.possibledirections.push([this.arraygame[this.emptypos][0]+1,this.arraygame[this.emptypos]][1])
+        }
+        if(this.arraygame[this.emptypos][0]-1<=this.gridlen){
+            this.possibledirections.push([this.arraygame[this.emptypos][0]-1,this.arraygame[this.emptypos][1]])  
+        }
+        if(this.arraygame[this.emptypos][1]+1<=this.gridlen){
+            this.possibledirections.push([this.arraygame[this.emptypos][0],this.arraygame[this.emptypos][1]+1])  
+        }
+        if(this.arraygame[this.emptypos][1]-1<=thss.gridlen){
+            this.possibledirections.push([this.arraygame[this.emptypos][0],this.arraygame[this.emptypos][1]-1])  
+        }
+    }
+    generatenew(){
+        for(let i=0;i<this.possibledirections;i++){
+            this.temppassarray=this.arraygame
+            for(let j=0;j<this.gridsize;j++){
+                if(this.possibledirections[i][0]==this.temppassarray[j][0] && this.possibledirections[i][1]==this.temppassarray[j][1]){
+                    this.swapper(i,this.emptypos,this.temppassarray)
+                    this.moves.push(i,this.emptypos)
+                    new gridstate(this.temppassarray,this.gridlen,this.called+1,this.moves)
+                }
+               
+            }
+            
+        }
+    }
+    swapper(index1,index2,array){
+        this.temp=array(index1)
+        array(index1)=array(index2)
+        array(index2)=this.temp
+    }
+}
