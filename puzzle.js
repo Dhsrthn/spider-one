@@ -5,7 +5,7 @@ let toindex
 let temp
 let winarray=[]
 const randombutton=document.getElementById('pleaserandom')
-const solvebutton=document.getElementById('pleasesolve')
+//const solvebutton=document.getElementById('pleasesolve')
 const savebutton=document.getElementById('savestate')
 let cellHeight,cellWidth
 let startingnow=true
@@ -48,6 +48,8 @@ function main(){
 
 window.requestAnimationFrame(main)
 
+let goalnumberarray=[]
+
 function numberpuzzleshow(){
     starting=0
     totalboxes=gridlength**2
@@ -64,6 +66,7 @@ function numberpuzzleshow(){
     for(let i=1;i<gridlength+1;i++){
         for(let j=1;j<gridlength+1;j++){
             arrayforpuzzle[starting]=[i,j,arrayofnumbers[starting]]
+            goalnumberarray[starting]=[i,j,arrayofnumbers[starting]]
             starting++
         }
     }
@@ -118,11 +121,11 @@ function clicked(event) {
     savestate()
   }
   
-  if(event.target==solvebutton){
-    if(numberpuzzle){
-       // solvenumberpuzzle()
-    }
-  }
+//   if(event.target==solvebutton){
+//     if(numberpuzzle){
+//        solvefunction()
+//     }
+//   }
 }
 
 function swap(){
@@ -184,7 +187,6 @@ function actuallyswap(index1,index2){
                 startingnow=0
             }
         }
-
     }
     if(!numberpuzzle){
         winarray=[]
@@ -623,91 +625,157 @@ function getsavedarray(){
 
 }
 
-let priorityarray=[]
 
-function solvefunction(){
-    priorityarray=[]
-}
+// let priorityarray=[]
+// let nodearray=[]
+// let movesarray=[]
+// let tempsolverarray=[]
+// function solvefunction(){
+//     priorityarray=[]
+//     nodearray=[]
+//     movesarray=[]
+//     if(numberpuzzle){
 
-class gridstate{
-    constructor(puzzlestate,gridlen,called,moves) {
-        this.arraygame=puzzlestate
-        this.gridlen=gridlen
-        this.goalstate=[]
-        this.setgoalstate=0
-        this.gridsize=gridlen*gridlen
-        this.called=called
-        this.moves=moves
-    }
+//         var Jsonstring=JSON.stringify(arrayforpuzzle)
+//         tempsolverarray=JSON.parse(Jsonstring)
+//         nodearray.push(new gridstate(tempsolverarray,gridlength,1,[],goalnumberarray))
+//         nodearray[0].solve()
+        
+//         for(let i=0;i<movesarray[0].length;i++){
 
-    solve(){
-        this.requiredinfo=[]
-        if(this.setgoalstate==0){
-            this.starting=1
-            for(let i=1;i<this.gridlen+1;i++){
-                for(let j=1;j<this.gridlen+1;j++){
-                    if(!(i==this.gridlen && j==this.gridlen)){
-                        this.goalstate.push([i,j,this.starting])
-                        this.starting++
-                    }else{
-                        this.goalstate.push([i,j,0])
-                    }
-                }
-            }
-        }
-        this.hamilton()
-        this.requiredinfo.push([this.arraygame],this.hamiltonval,this.moves)
-        priorityarray.push(this.requiredinfo)
-        this.generatenew()
-    }
+//             actuallyswap(movesarray[0][i][0],movesarray[0][i][1])
+//         }
+        
+//     }
+// }
+
+// class gridstate{
+//     constructor(state,gridlen,called,moves,goalstate){
+//         this.currentarray=state
+//         this.gridlen=gridlen
+//         this.gridsize=gridlen*gridlen
+//         this.goalstate=goalstate
+//         this.called=called
+//         this.moves=moves
+//         this.check=0
+//     }
+//     solve(){
+//         console.log(this.called)
+//         for(let i=0;i<this.gridsize;i++){
+//             if(this.currentarray[i][2]!==this.goalstate[i][2]){
+//                 this.check++
     
-    hamilton(){
-        this.hamiltonval=0
-        for(let i=0;i<this.gridsize;i++){
-            if(this.arraygame[i][2]!==this.goalstate[i][2]){
-                this.hamiltonval++
-            }
-        }
-        this.hamiltonval=this.hamiltonval+this.called
-    }
+//             }
+//         }
+//         if(this.check!==0){
+//             priorityarray.push(this.currentarray)
+//             this.possibleways()
+//             this.checknodes()
+//             nodearray[this.called].solve()
+//             return
+//         }
+//         if(this.check==0){
+//             movesarray.push(this.moves)
+//             return
+//         }
+        
+//     }
+//     hamilton(array1,array2,number){
+//         this.hamiltonval=0
+//         for(let q=0;q<this.gridsize;q++){
+//             if(array1[q][2]!=array2[q][2]){
+//                 for(let k=0;k<array2.length;k++){
+//                     if(array1[q][2]==array2[k][2]){
+//                         this.hamiltonval+=Math.abs(array1[q][0]-array2[k][0])+Math.abs(array1[q][1]-array2[k][1])
+//                     }
+//                 }
+      
+        
+//             }
+//         }
+
+//         this.hamiltonval=this.hamiltonval+number
+//         return this.hamiltonval
+//     }
+//     possibleways(){
+//         this.possiblearray=[]
+//         for(let i=0;i<this.gridsize;i++){
+//             if(this.currentarray[i][2]==' '){
+//                 this.epos=i
+//             }
+//         }
+//         this.ecoord=[this.currentarray[this.epos][0],this.currentarray[this.epos][1]]
+//         if(this.ecoord[0]+1<=this.gridlen){
+//             this.possiblearray.push([this.ecoord[0]+1,this.ecoord[1]])
+//         }
+//         if(this.ecoord[0]-1>=1){
+//             this.possiblearray.push([this.ecoord[0]-1,this.ecoord[1]])
+//         }
+//         if(this.ecoord[1]+1<=this.gridlen){
+//             this.possiblearray.push([this.ecoord[0],this.ecoord[1]+1])
+//         }
+//         if(this.ecoord[1]-1>=1){
+//             this.possiblearray.push([this.ecoord[0],this.ecoord[1]-1])
+//         }
+   
+//     }
+//     checknodes(){
+//         this.temporary=[]
+//         this.movestemp=[]
+//         this.requiredinfo=[]
+//         this.start=0
+//         for(let i=0;i<this.possiblearray.length;i++){
+//            // console.log(this.requiredinfo)
+//             this.temporary.push([])
+//             this.movestemp.push([])
+//             this.Json1=JSON.stringify(this.currentarray)
+//             this.temporary[i]=JSON.parse(this.Json1)
+//             this.Json2=JSON.stringify(this.moves)
+//             this.movestemp[i]=JSON.parse(this.Json2)
+          
+//             for(let j=0;j<this.gridsize;j++){
+//                 if(this.possiblearray[i][0]==this.temporary[i][j][0] && this.possiblearray[i][1]==this.temporary[i][j][1]){
+//                     this.temp=this.temporary[i][j][2]
+//                     this.temporary[i][j][2]=this.temporary[i][this.epos][2]
+//                     this.temporary[i][this.epos][2]=this.temp
+//                     if(this.checkprior(this.temporary[i])){
+//                         this.requiredinfo.push([])
+//                         // console.log(this.requiredinfo)
+//                         // console.log(this.temporary[i])
+//                         // console.log(typeof(this.requiredinfo[i]))
+//                         this.requiredinfo[this.start].push([this.temporary[i]])
+//                         this.temphamil=this.hamilton(this.temporary[i],this.goalstate,this.called)
+//                         this.requiredinfo[this.start].push(this.temphamil)
+//                         this.movestemp[i].push([this.epos,j])
+//                         this.requiredinfo[this.start].push(this.movestemp[i])
+//                         this.start++
+//                     }
+//                 }
+//             }
+//         }
+//         this.requiredinfo.sort((a,b)=>(a[1]-b[1]))
+//        // console.log(priorityarray)
+//         nodearray.push(new gridstate(this.requiredinfo[0][0][0],this.gridlen,this.called+1,this.requiredinfo[0][2],this.goalstate))
+//        // console.log('2')
+        
     
-    possibleways(){
-        this.possibledirections=[]
-        for(let i=0;i<this.gridsize;i++){
-            if(this.arraygame[i][2]==0){
-                this.emptypos=i
-            }
-        }
-        if(this.arraygame[this.emptypos][0]+1<=this.gridlen){
-            this.possibledirections.push([this.arraygame[this.emptypos][0]+1,this.arraygame[this.emptypos]][1])
-        }
-        if(this.arraygame[this.emptypos][0]-1<=this.gridlen){
-            this.possibledirections.push([this.arraygame[this.emptypos][0]-1,this.arraygame[this.emptypos][1]])  
-        }
-        if(this.arraygame[this.emptypos][1]+1<=this.gridlen){
-            this.possibledirections.push([this.arraygame[this.emptypos][0],this.arraygame[this.emptypos][1]+1])  
-        }
-        if(this.arraygame[this.emptypos][1]-1<=thss.gridlen){
-            this.possibledirections.push([this.arraygame[this.emptypos][0],this.arraygame[this.emptypos][1]-1])  
-        }
-    }
-    generatenew(){
-        for(let i=0;i<this.possibledirections;i++){
-            this.temppassarray=this.arraygame
-            for(let j=0;j<this.gridsize;j++){
-                if(this.possibledirections[i][0]==this.temppassarray[j][0] && this.possibledirections[i][1]==this.temppassarray[j][1]){
-                    this.swapper(i,this.emptypos,this.temppassarray)
-                    this.moves.push(i,this.emptypos)
-                    new gridstate(this.temppassarray,this.gridlen,this.called+1,this.moves)
-                }
-               
-            }
-            
-        }
-    }
-    swapper(index1,index2,array){
-        this.temp=array(index1)
-        array(index1)=array(index2)
-        array(index2)=this.temp
-    }
-}
+//     }
+//     checkprior(array){
+//         this.checkvalue=[]
+//         for(let g=0;g<priorityarray.length;g++){
+//             this.checkvalue.push([0])
+//             for(let v=0;v<priorityarray[g].length;v++){
+//                 if(priorityarray[g][v][2]==array[v][2]){
+//                     this.checkvalue[g][0]+=1
+//                 }
+//             }
+//         }
+//         for(let g=0;g<this.checkvalue.length;g++){
+//             if(this.checkvalue[g]==this.gridsize){
+//                 return false
+//             }
+//         }
+//         return true
+//     }
+
+// }

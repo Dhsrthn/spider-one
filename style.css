@@ -142,7 +142,7 @@ body {
 button {
     cursor: pointer;
     background-color: transparent;
-    width: 10vmin;
+    width: 12.5vmin;
     height: 7vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -167,7 +167,7 @@ button:hover{
 #uploadLabel {
     cursor: pointer;
     display: inline-block;
-    width: 10vmin;
+    width: 12.5vmin;
     height: 5vmin;
     margin-top: 5vmin;
     background-size: contain;
@@ -255,16 +255,16 @@ button:hover{
         font-size:3vmax;
     }
     button{
-        width:20%;
+        width:25%;
         height:10vmax;
         margin-top:2.5vmax;
     }
     #uploadLabel{
         margin-left:5%;
         margin-right: 5%;
-        width:10%;
+        width:25%;
         height: 9vmax;
-        
+        margin-top: 2vmax;
     }
     #linkInput{
         margin-left:5%;
@@ -273,6 +273,10 @@ button:hover{
         height:5vmax;
         margin-top:5vmax;
         
+    }
+    #imageInput{
+        height:10vmax;
+        margin-top: 2vmax;
     }
     #linkInput:focus{
         width:50%;
@@ -284,14 +288,14 @@ button:hover{
     }
     #pleaserandom{
         margin-left: 5%;
-        width: 15%;
+        width: 25%;
         margin-right:5%;
     }
-    #pleasesolve{
+    /* #pleasesolve{
         margin-left: 5%;
-        width:15%;
+        width:25%;
         margin-right:5%;
-    }
+    } */
     #opener{
         height:5vmax;
         width:5vmax;
