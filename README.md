@@ -1,6 +1,6 @@
 # Slider puzzle
 ## four major buttons - randomize, save state, enter image url, upload image file 
-enter grid size below
-open side menu to access sqaved states, or go back to default 3*3
+Enter grid size below the four buttons.
+Open side menu to access saved states, or to go back to default 3*3
 
-(solving methods commented out in code cuz cldnt complete fully ;-; )
+(solving methods commented out in code cuz couldn't complete fully ;-; )
