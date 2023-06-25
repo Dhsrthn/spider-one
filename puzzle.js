@@ -515,7 +515,7 @@ function savestate(){
         savedarray.push(tempsavearray)
         localStorage.setItem(hai,JSON.stringify(savedarray))
     }
-    alert('Saved currrent state')
+    alert('Saved currrent state- Open side menu to access')
 }
 
 let updateindexarray=[]
